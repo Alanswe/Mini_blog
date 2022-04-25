@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+
+{%block title%}{{post[3]}}{%endblock%}
+
+{%block content%}
+
+    <div class="post">
+        <h1>{{post[3]}}</h1>
+        <p>{{post[4]}}</p>
+        <address>Autor: {{post[2]}} <br> Fecha: {{post[1]}}</address>
+    </div>
+    <a href="/">Volver</a>
+
+{%endblock%}

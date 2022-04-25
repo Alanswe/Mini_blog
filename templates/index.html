@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+
+{%block title%}post{%endblock%}
+
+{%block content%}
+    <!-- {%for post in posts%}
+
+    {{post[0]}}<br/>
+    {{post[1]}}<br/>
+    {{post[2]}}<br/>
+    {{post[3]}}<br/>
+    {{post[4]}}<br/>
+
+    {%endfor%} -->
+
+    {%for post in posts%}
+        <div class="post">
+            <h1><a href="post/{{post[0]}}">{{post[3]}}</a></h1>
+            <p>{{post[4]|truncate(100)}}</p>
+            <address>Autor: {{post[2]}} <br> Fecha: {{post[1]}}</address>
+        </div>
+    {%endfor%}
+
+{%endblock%}
