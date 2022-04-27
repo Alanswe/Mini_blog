@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+
+{%block title%}Admin_Home{%endblock%}
+
+{%block content%}
+
+<h1>Datos del post</h1>
+
+<table>
+    <tr>
+        <th>Titulo</th>
+        <th>Autor</th>
+        <th>Fecha</th>
+        <th>acciones</th>
+    </tr>
+    {% for post in posts%}
+    <tr>
+        <td>{{post[3]}}</td>
+        <td>{{post[2]}}</td>
+        <td>{{post[1]}}</td>
+        <td><a href="/editar/{post[0]}}">Editar</a></td>
+        <td><a href="/delete/{{post[0]}}">Borrar</a></td>
+    </tr>
+    {%endfor%}
+</table>
+
+{%endblock%}

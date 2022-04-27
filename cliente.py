@@ -21,7 +21,7 @@ def home():
 def ver_post(id):
     basedatos = Sql(BD)
     resp = basedatos.select(f'select * from posts where id={id}')
-    return {'post':resp[0]}
+    return {'post ':resp[0]}
 
 
 
