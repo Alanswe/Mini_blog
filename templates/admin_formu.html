@@ -13,21 +13,19 @@
     <h2>Datos del post</h2>
     <input type="hidden" id="id" name="id" value="{%if post%}{{post[0]}}{%endif%}"><br/>
 
-    <label for="Titulo">titulo: </label>
+    <label for="titulo">titulo: </label>
     <input type="text" id="titulo" name="titulo" value="{%if post%}{{post[3]}}{%endif%}"><br/>
 
     <label for="autor">autor: </label>
     <input type="text" id="autor" name="autor" value="{%if post%}{{post[2]}}{%endif%}"><br/>
 
-    <label for="Fecha">Fecha</label>
-    <input type="date" id="Fecha" name="Fecha" value="{%if post%}{{post[4]}}{%endif%}"><br/>
+    <label for="fecha">Fecha</label>
+    <input type="date" id="fecha" name="fecha" value="{%if post%}{{post[1]}}{%endif%}"><br/>
 
     <label for="cuerpo">Cuerpo</label>
     <textarea name="cuerpo" id="cuerpo" cols="30" rows="10">{%if post%}{{post[4]}}{%endif%}</textarea>
 
-    <button type="submit" value="Enviar">Enviar</button>
-    <input type="submit" value="Enviar"><a href="/editar/{{post[0]}}">Enviar</a>
-    <input type="" value="Cancelar">Cancelar
+    <input type="submit" value="Enviar">
 </form>
 
 {%endblock%}
