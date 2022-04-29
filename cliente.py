@@ -27,16 +27,16 @@ def server_static(filename):
 @jinja2_view('index.html')
 def home():
     basedatos = Sql(BD)
-    resp = basedatos.select('select * from posts')
-    resp = modifica_fecha(resp)
-    return {'posts':resp}
+    posts = basedatos.select('select * from posts')
+    posts = modifica_fecha(posts)
+    return {'posts':posts}
 
 @route('/post/<id:int>')
 @jinja2_view('post.html')
 def ver_post(id):
     basedatos = Sql(BD)
-    resp = basedatos.select(f'select * from posts where id={id}')
-    return {'post':resp[0]}
+    posts = basedatos.select(f'select * from posts where id={id}')
+    return {'post':posts[0]}
 
 
 # PARTE DE ADMINISTRACIÓN
@@ -45,22 +45,28 @@ def ver_post(id):
 @jinja2_view('admin_index.html')
 def home():
     bdatos = Sql(BD)
-    resp = bdatos.select('SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p')
-    resp = modifica_fecha(resp)
-    return {'posts' : resp}
+    posts = bdatos.select('SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p')
+    posts = modifica_fecha(posts)
+    return {'posts' : posts}
 
 @route('/admin/editar')
 @route('/admin/editar/<id:int>')
 @jinja2_view('admin_formu.html')
 def mi_form(id=None):
     bdatos = Sql(BD)
-    resp = None
+    posts = None
+    etiquetas = bdatos.select('select id, nombre from T_etiquetas;')
+    categorias = bdatos.select('select id, nombre from T_categorias;')
     if id:
-        resp = bdatos.select(f'SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p where id = {id}')
+        posts = bdatos.select(f'SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p where id = {id}')
     
-    #resp = modifica_fecha(resp)
-    if resp:
-        return {'post' : resp[0]}
+    #posts = modifica_fecha(posts)
+    if posts:
+        return {'post' : posts[0],
+                'etiquetas':etiquetas,
+                'categorias':categorias,
+                
+        }
     else:
         return {'post': ''}
 
@@ -81,9 +87,9 @@ def guardar():
 
     bdatos = Sql(BD)
     if request.POST.id:
-        resp = bdatos.update(p)
+        posts = bdatos.update(p)
     else:
-        resp = bdatos.insert(p)
+        posts = bdatos.insert(p)
 
     redirect('/admin/')
 
@@ -103,8 +109,8 @@ def borrar(_id):
 def ver_post(id=None):
     if id:
         bdatos = Sql(BD)
-        resp = bdatos.select(f'select * from posts where id={id}')
-        return {'post' : resp[0]}
+        posts = bdatos.select(f'select * from posts where id={id}')
+        return {'post' : posts[0]}
     else:
         return {'post':None}
 
