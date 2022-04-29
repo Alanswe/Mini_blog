@@ -12,10 +12,12 @@
     {{post[4]}}<br/>
 
     {%endfor%} -->
-
+    <br>
+    <a href="/admin/">Administrar</a>
+    <br>
     {%for post in posts%}
-        <div class="post">
-            <h1><a href="post/{{post[0]}}">{{post[3]}}</a></h1>
+        <div>
+            <h2><a href="/post/{{post[0]}}">{{post[3]}}</a></h2>
             <p>{{post[4]|truncate(100)}}</p>
             <address>Autor: {{post[2]}} <br> Fecha: {{post[1]}}</address>
         </div>

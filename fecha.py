@@ -1,3 +1,19 @@
+import locale
+from datetime import datetime
+
+locale.setlocale(locale.LC_ALL, 'de_DE')
+date_str_es = '27-Octubre-2020'  # es_ES locale
+datetime_object = datetime.strptime(date_str_es, '%d-%B-%Y')
+print(datetime_object)
+
+# -----------------------------------------------
+
+
+
+
+
+
+
 # https://www.geeksforgeeks.org/python-datetime-strptime-function/#:~:text=strptime%20%28%29%20is%20another%20method%20available%20in%20DateTime,format%20to%20date-time%20object.%20Syntax%3A%20datetime.strptime%20%28time_data%2C%20format_data%29?msclkid=b313a73bc5f811eca99f06366f0fc5bd
 import datetime
 import _strptime

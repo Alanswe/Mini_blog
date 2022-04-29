@@ -4,12 +4,9 @@
 
 {%block content%}
 
-<th>Titulo</th>
-<th>Autor</th>
-<th>Fecha</th>
-<th>acciones</th>
+<h2>Edición de post</h2>
 
-<form action="/guardar" method="post">
+<form action="/admin/guardar" method="post">
     <h2>Datos del post</h2>
     <input type="hidden" id="id" name="id" value="{%if post%}{{post[0]}}{%endif%}"><br/>
 
@@ -25,7 +22,9 @@
     <label for="cuerpo">Cuerpo</label>
     <textarea name="cuerpo" id="cuerpo" cols="30" rows="10">{%if post%}{{post[4]}}{%endif%}</textarea>
 
-    <input type="submit" value="Enviar">
+    <!-- <input type="submit" value="Enviar"> -->
+    <br>
+    <input type="submit" value="Enviar"> <a href="/admin/">Cancelar</a>
 </form>
 
 {%endblock%}

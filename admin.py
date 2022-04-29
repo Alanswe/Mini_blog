@@ -2,6 +2,8 @@ from bottle import static_file,route,run,jinja2_view,request,TEMPLATE_PATH,redir
 from settings import STATIC_FILES,TEMPLATES,BD
 from sql import Sql
 from clase_post import Posts
+from datetime import datetime
+
 
 TEMPLATE_PATH.append(TEMPLATES)
 
@@ -16,8 +18,6 @@ def modifica_fecha(lista_tuplas):
         salida.append(tmp_tupla)
     return salida
 
-
-
 @route('/static/<filename:path>')
 def server_static(filename):
     archivo = static_file(filename, root=STATIC_FILES)
@@ -29,7 +29,7 @@ def server_static(filename):
 def home():
     bdatos = Sql(BD)
     resp = bdatos.select('SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p')
-    #resp = modifica_fecha(resp)
+    resp = modifica_fecha(resp)
     return {'posts' : resp}
 
 @route('/editar')
@@ -41,8 +41,10 @@ def mi_form(id=None):
         resp = bdatos.select(f'SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p where id = {id}')
     
     #resp = modifica_fecha(resp)
-    return {'post' : resp[0]}
-
+    if resp:
+        return {'post' : resp[0]}
+    else:
+        return {'post': ''}
 
 @route('/guardar', method='POST')
 def guardar():
@@ -66,7 +68,26 @@ def guardar():
 
     redirect('/')
 
+@route('/borrar')
+@route('/borrar/<_id:int>')
+def borrar(_id):
+    p = Posts(id=_id)
+    bdatos = Sql(BD)
+    bdatos.delete(p)
 
+    redirect('/')
+    
+
+@route('/post')
+@route('/post/<id:int>')
+@jinja2_view('admin_formu.html')
+def ver_post(id=None):
+    if id:
+        bdatos = Sql(BD)
+        resp = bdatos.select(f'select * from posts where id={id}')
+        return {'post' : resp[0]}
+    else:
+        return {'post':None}
 
 
 run(host='localhost', port=8000,debug=True,reloader=True)
