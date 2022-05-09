@@ -36,7 +36,9 @@ def home():
 def ver_post(id):
     basedatos = Sql(BD)
     posts = basedatos.select(f'select * from posts where id={id}')
-    return {'post':posts[0]}
+    etiquetas = posts[0][5].split(',')
+    categorias = posts[0][6].split(',')
+    return {'post':posts[0], 'Etiquetas': etiquetas, 'Categorias': categorias}
 
 
 # PARTE DE ADMINISTRACIÓN
@@ -45,7 +47,7 @@ def ver_post(id):
 @jinja2_view('admin_index.html')
 def home():
     bdatos = Sql(BD)
-    posts = bdatos.select('SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p')
+    posts = bdatos.select('SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo,p.etiquetas,p.categorias from posts p')
     posts = modifica_fecha(posts)
     return {'posts' : posts}
 
@@ -55,18 +57,19 @@ def home():
 def mi_form(id=None):
     bdatos = Sql(BD)
     posts = None
-    etiquetas = bdatos.select('select id, nombre from T_etiquetas;')
-    categorias = bdatos.select('select id, nombre from T_categorias;')
+    # etiquetas = bdatos.select('select id, nombre from T_etiquetas;')
+    # categorias = bdatos.select('select id, nombre from T_categorias;')
     if id:
-        posts = bdatos.select(f'SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo  from posts p where id = {id}')
+        posts = bdatos.select(f'SELECT  p.id, p.fecha, p.autor ,p.titulo, p.cuerpo,p.etiquetas,p.categorias from posts p where id = {id}')
     
     #posts = modifica_fecha(posts)
     if posts:
-        return {'post' : posts[0],
-                'etiquetas':etiquetas,
-                'categorias':categorias,
+        # return {'post' : posts[0],
+        #         'etiquetas':etiquetas,
+        #         'categorias':categorias,
                 
-        }
+        # }
+        return {'post' : posts[0]}
     else:
         return {'post': ''}
 
@@ -82,8 +85,10 @@ def guardar():
     autor = request.POST.autor
     titulo = request.POST.titulo
     cuerpo = request.POST.cuerpo
+    etiquetas = request.POST.etiquetas
+    categorias = request.POST.categorias
 
-    p = Posts(id,fecha, autor, titulo, cuerpo )
+    p = Posts(id,fecha, autor, titulo, cuerpo, etiquetas, categorias)
 
     bdatos = Sql(BD)
     if request.POST.id:

@@ -21,6 +21,13 @@
 
     <label for="cuerpo">Cuerpo</label>
     <textarea name="cuerpo" id="cuerpo" cols="30" rows="10">{%if post%}{{post[4]}}{%endif%}</textarea>
+    <br/>
+
+    <label for="etiquetas">etiquetas: </label>
+    <input type="text" id="etiquetas" name="etiquetas" value="{%if post%}{{post[5]}}{%endif%}"><br/>
+
+    <label for="categorias">categorias: </label>
+    <input type="text" id="categorias" name="categorias" value="{%if post%}{{post[6]}}{%endif%}"><br/>
 
     <!-- <input type="submit" value="Enviar"> -->
     <br>

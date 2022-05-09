@@ -4,10 +4,14 @@ class Posts():
                 fecha=None, 
                 autor=None, 
                 titulo=None, 
-                cuerpo=None) -> None:
+                cuerpo=None,
+                etiquetas=None,
+                categorias=None) -> None:
         self.id = id
         self.fecha = fecha
         self.autor = autor
         self.titulo = titulo
         self.cuerpo = cuerpo
+        self.etiquetas = etiquetas
+        self.categorias = categorias
         

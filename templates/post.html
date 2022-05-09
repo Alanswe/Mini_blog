@@ -7,8 +7,19 @@
     <div>
         <h1>{{post[3]}}</h1>
         <p>{{post[4]}}</p>
+        <address>Categorias: {{post[6]}} <br> Etiquetas: {{post[5]}}</address>
         <address>Autor: {{post[2]}} <br> Fecha: {{post[1]}}</address>
     </div>
+
+    <p>
+        {%for categoria in categorias%}
+            <a href="">{{categorias[categoria]}}</a>
+        {%endfor%}
+
+        {%for etiqueta in etiquetas%}
+
+        {%endfor%}
+    </p>
     <a href="/">Volver</a>
 
 {%endblock%}
