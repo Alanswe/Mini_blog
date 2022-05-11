@@ -12,14 +12,12 @@
     </div>
 
     <p>
-        Categoria:
-        {%for categoria in c%}
-            <a href="/filtro/{{categoria}}">{{categoria}}</a>
+        {%for categoria in categorias%}
+            <a href="">{{categoria}}</a>
         {%endfor%}
-        <br>
-        Etiquetas:
+
         {%for etiqueta in etiquetas%}
-            <a href="/filtro/{{etiqueta}}">{{etiqueta}}</a> 
+            <a href="">{{etiqueta}}</a><br>
         {%endfor%}
     </p>
     <a href="/">Volver</a>

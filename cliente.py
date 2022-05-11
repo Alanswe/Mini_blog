@@ -18,6 +18,15 @@ def modifica_fecha(lista_tuplas):
         salida.append(tmp_tupla)
     return salida
 
+def tupla_a_lista(mi_lista_tuplas):
+    salida = []
+    for t in mi_lista_tuplas:
+        salida.append(t[0]) #Suponemos que el id está en el primer lugar
+    return salida
+
+def cadena_a_lista(mi_cadena):
+    return mi_cadena.split(',')
+
 @route('/static/<filename:path>')
 def server_static(filename):
     archivo = static_file(filename, root=STATIC_FILES)
@@ -36,9 +45,20 @@ def home():
 def ver_post(id):
     basedatos = Sql(BD)
     posts = basedatos.select(f'select * from posts where id={id}')
-    etiquetas = posts[0][5].split(',')
-    categorias = posts[0][6].split(',')
-    return {'post':posts[0], 'Etiquetas': etiquetas, 'Categorias': categorias}
+    # etiquetas = posts[0][5].split(',')
+    # categorias = posts[0][6].split(',')
+    return {'post' : posts[0], 
+        'etiquetas':cadena_a_lista(posts[0][5]), 
+        'categorias': cadena_a_lista(posts[0][6]) }
+    # return {'post':posts[0], 'Etiquetas': etiquetas, 'Categorias': categorias}
+
+
+@route('/filtro/<etiqueta>')
+@jinja2_view('index.html')
+def ver_post(etiqueta):
+    bdatos = Sql(BD)
+    resp = bdatos.select(f'SELECT * from posts p WHERE p.etiquetas like "%{etiqueta}%"')
+    return {'posts': resp}
 
 
 # PARTE DE ADMINISTRACIÓN

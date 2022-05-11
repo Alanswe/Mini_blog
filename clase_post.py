@@ -15,3 +15,13 @@ class Posts():
         self.etiquetas = etiquetas
         self.categorias = categorias
         
+
+class T_Etiquetas():
+    def __init__(self, id, nombre) -> None:
+        self.id = id
+        self.nombre = nombre
+
+class T_Categorias():
+    def __init__(self, id, nombre) -> None:
+        self.id = id
+        self.nombre = nombre
