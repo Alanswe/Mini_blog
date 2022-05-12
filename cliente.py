@@ -2,8 +2,6 @@ from bottle import static_file,route,run,jinja2_view,TEMPLATE_PATH,redirect,requ
 from settings import STATIC_FILES,BD, TEMPLATES
 from sql import Sql
 from clase_post import Posts
-from datetime import datetime
-
 
 TEMPLATE_PATH.append(TEMPLATES)
 
@@ -26,6 +24,17 @@ def tupla_a_lista(mi_lista_tuplas):
 
 def cadena_a_lista(mi_cadena):
     return mi_cadena.split(',')
+
+def conjunto_partes(lista_etiquetas):
+    """
+    Recibe una cadena de etiquetas o categorias,
+    la corta con cadena_a_lista y 
+    """
+    lista_total = []
+    for etq in lista_etiquetas:
+        cadena_a_lista(etq[0])
+        lista_total += lista_total
+    return list(set(lista_total))
 
 @route('/static/<filename:path>')
 def server_static(filename):
@@ -53,13 +62,27 @@ def ver_post(id):
     # return {'post':posts[0], 'Etiquetas': etiquetas, 'Categorias': categorias}
 
 
-@route('/filtro/<etiqueta>')
+@route('/filtro_e/<etiqueta>')
 @jinja2_view('index.html')
-def ver_post(etiqueta):
+def ver_etiqueta(etiqueta):
     bdatos = Sql(BD)
-    resp = bdatos.select(f'SELECT * from posts p WHERE p.etiquetas like "%{etiqueta}%"')
+    resp = bdatos.select(f'SELECT * from posts WHERE etiquetas like "%{etiqueta}%"')
     return {'posts': resp}
 
+@route('/filtro_c/<categoria>')
+@jinja2_view('index.html')
+def ver_categoria(categoria):
+    bdatos = Sql(BD)
+    resp = bdatos.select(f'SELECT * from posts p WHERE p.categorias like "%{categoria}%"')
+    return {'posts': resp}
+
+route('/etiquetas')
+@jinja2_view('etiquetas.html')
+def ver_etiquetas(categoria):
+    bdatos = Sql(BD)
+    resp = bdatos.select(f'SELECT etiquetas from posts')
+    conjunto = conjunto_partes(resp)
+    return {'posts': conjunto}
 
 # PARTE DE ADMINISTRACIÓN
 

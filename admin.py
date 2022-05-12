@@ -4,7 +4,6 @@ from sql import Sql
 from clase_post import Posts
 from datetime import datetime
 
-
 TEMPLATE_PATH.append(TEMPLATES)
 
 def modifica_fecha(lista_tuplas):
@@ -22,7 +21,6 @@ def modifica_fecha(lista_tuplas):
 def server_static(filename):
     archivo = static_file(filename, root=STATIC_FILES)
     return archivo
-
 
 @route('/')
 @jinja2_view('admin_index.html')
@@ -89,6 +87,4 @@ def ver_post(id=None):
     else:
         return {'post':None}
 
-
 run(host='localhost', port=8000,debug=True,reloader=True)
-

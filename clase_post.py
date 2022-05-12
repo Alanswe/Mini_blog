@@ -14,7 +14,6 @@ class Posts():
         self.cuerpo = cuerpo
         self.etiquetas = etiquetas
         self.categorias = categorias
-        
 
 class T_Etiquetas():
     def __init__(self, id, nombre) -> None:

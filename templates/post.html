@@ -13,13 +13,13 @@
 
     <p>
         Categoria:
-        {%for categoria in c%}
-            <a href="/filtro/{{categoria}}">{{categoria}}</a>
+        {%for categoria in categorias%}
+            <a href="/filtro_c/{{categoria}}">{{categoria}}</a>
         {%endfor%}
         <br>
         Etiquetas:
         {%for etiqueta in etiquetas%}
-            <a href="/filtro/{{etiqueta}}">{{etiqueta}}</a> 
+            <a href="/filtro_e/{{etiqueta}}">{{etiqueta}}</a> 
         {%endfor%}
     </p>
     <a href="/">Volver</a>
