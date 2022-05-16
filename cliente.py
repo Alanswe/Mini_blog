@@ -2,6 +2,8 @@ from bottle import static_file,route,run,jinja2_view,TEMPLATE_PATH,redirect,requ
 from settings import STATIC_FILES,BD, TEMPLATES
 from sql import Sql
 from clase_post import Posts
+from collections import Counter
+
 
 TEMPLATE_PATH.append(TEMPLATES)
 
@@ -23,7 +25,12 @@ def tupla_a_lista(mi_lista_tuplas):
     return salida
 
 def cadena_a_lista(mi_cadena):
-    return mi_cadena.split(',')
+    if mi_cadena != str:
+        mi_cadena = ''
+        return mi_cadena.split(',')
+
+    else:
+        return mi_cadena.split(',')
 
 def conjunto_partes(lista_etiquetas):
     """
@@ -34,7 +41,7 @@ def conjunto_partes(lista_etiquetas):
     for etq in lista_etiquetas:
         cadena_a_lista(etq[0])
         lista_total += lista_total
-    return list(set(lista_total))
+    return list(set(lista_total)) # SET: de una lista de elementos con repetición, saca otra con los elementos sin repetir
 
 @route('/static/<filename:path>')
 def server_static(filename):
@@ -54,13 +61,9 @@ def home():
 def ver_post(id):
     basedatos = Sql(BD)
     posts = basedatos.select(f'select * from posts where id={id}')
-    # etiquetas = posts[0][5].split(',')
-    # categorias = posts[0][6].split(',')
     return {'post' : posts[0], 
         'etiquetas':cadena_a_lista(posts[0][5]), 
         'categorias': cadena_a_lista(posts[0][6]) }
-    # return {'post':posts[0], 'Etiquetas': etiquetas, 'Categorias': categorias}
-
 
 @route('/filtro_e/<etiqueta>')
 @jinja2_view('index.html')
@@ -76,13 +79,13 @@ def ver_categoria(categoria):
     resp = bdatos.select(f'SELECT * from posts p WHERE p.categorias like "%{categoria}%"')
     return {'posts': resp}
 
-route('/etiquetas')
+@route('/etiquetas')
 @jinja2_view('etiquetas.html')
-def ver_etiquetas(categoria):
+def ver_etiquetas():
     bdatos = Sql(BD)
     resp = bdatos.select(f'SELECT etiquetas from posts')
-    conjunto = conjunto_partes(resp)
-    return {'posts': conjunto}
+    dict_cuenta = conjunto_partes(resp)
+    return {'posts': dict_cuenta}
 
 # PARTE DE ADMINISTRACIÓN
 
